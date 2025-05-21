@@ -1,0 +1,10 @@
+[project]
+name = "avenor"
+version = "0.1.0"
+dependencies = ["Zangar @ git+https://github.com/Dog-Egg/Zangar"]
+
+[tool.coverage.run]
+omit = ["docs/*"]
+
+[tool.coverage.report]
+exclude_also = ["raise NotImplementedError"]
