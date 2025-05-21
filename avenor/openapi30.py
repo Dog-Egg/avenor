@@ -1,7 +1,6 @@
 from __future__ import annotations as _annotations
 
 import http as _http
-import itertools as _itertools
 import typing as _t
 
 import zangar as _z
@@ -12,18 +11,8 @@ _OAS_DECLARATION = "oas_declaration"
 _HTTP_METHODS = ["get", "post", "put", "delete", "patch", "head", "options", "trace"]
 
 
-def as_path_item_spec(obj, /, *, dispatch_name: str = "dispatch") -> dict:
+def as_path_item_spec(obj, /) -> dict:
     rv = {}
-    method_common_specifics = []
-
-    dispatch = getattr(obj, dispatch_name, None)
-    if dispatch is not None:
-        dispatch_specifics = getattr(dispatch, _OAS_SPECIFIC_OBJECTS, [])
-        for specific in reversed(dispatch_specifics):
-            if isinstance(specific, ParameterObject):
-                _set_dict(rv, ["parameters"], lambda x: (x or []) + [specific.spec()])
-            else:
-                method_common_specifics.append(specific)
 
     for method in _HTTP_METHODS:
         if not hasattr(obj, method):
@@ -31,9 +20,7 @@ def as_path_item_spec(obj, /, *, dispatch_name: str = "dispatch") -> dict:
 
         method_handle = getattr(obj, method)
         method_specifics = getattr(method_handle, _OAS_SPECIFIC_OBJECTS, [])
-        for specific in _itertools.chain(
-            method_common_specifics, reversed(method_specifics)
-        ):
+        for specific in reversed(method_specifics):
             if isinstance(specific, ParameterObject):
                 _set_dict(
                     rv,

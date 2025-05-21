@@ -84,9 +84,6 @@ class BookDetail:
             required=True,
         )
     )
-    @specify(ResponseObject(404, description="Book is not found"))
-    def dispatch(self): ...
-
     @specify(
         ResponseObject(
             200,
@@ -97,6 +94,7 @@ class BookDetail:
             },
         )
     )
+    @specify(ResponseObject(404, description="Book is not found"))
     def get(self): ...
 
 
