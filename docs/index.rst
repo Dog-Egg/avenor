@@ -6,4 +6,6 @@ Avenor provides a set of framete-independent OpenAPI interface development templ
 
 .. literalinclude:: demo.py
 
-.. swaggerui:: demo.openapi
+.. swaggerui::
+
+    pyobj: demo.openapi
